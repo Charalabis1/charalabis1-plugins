@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Charalabis1 Plugins</title>
+
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: white;
+  font-family: "UnifrakturCook", serif;
+  background:
+    radial-gradient(circle at 50% 20%, #4b096e, transparent 40%),
+    linear-gradient(135deg, #08000e, #24002f, #050008);
+  overflow-x: hidden;
+}
+
+/* Lightning effects */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .4;
+  background:
+    linear-gradient(120deg, transparent 45%, #8e21ff 46%, transparent 47%),
+    linear-gradient(60deg, transparent 70%, #c05aff 71%, transparent 72%);
+  background-size: 500px 500px;
+  animation: lightning 5s infinite;
+}
+
+@keyframes lightning {
+  0%, 90%, 100% { opacity: .15; }
+  92% { opacity: .7; }
+  94% { opacity: .1; }
+  96% { opacity: .5; }
+}
+
+/* Header */
+header {
+  width: 90%;
+  max-width: 1200px;
+  margin: 30px auto 45px;
+  display: grid;
+  grid-template-columns: 150px 1fr 150px;
+  gap: 25px;
+  align-items: center;
+}
+
+.profile,
+.discord,
+.brand {
+  border: 2px solid #962cff;
+  border-radius: 18px;
+  background: rgba(12, 0, 25, .85);
+  box-shadow: 0 0 25px #6413a0;
+}
+
+.profile,
+.discord {
+  height: 125px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+}
+
+.profile img {
+  width: 95px;
+  height: 95px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.brand {
+  text-align: center;
+  padding: 22px;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: clamp(35px, 5vw, 70px);
+  text-shadow: 0 0 20px #b52cff;
+}
+
+.brand h2 {
+  margin: 0;
+  color: #b63cff;
+  font-size: 45px;
+}
+
+/* Discord */
+.discord {
+  flex-direction: column;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.discord-icon {
+  font-size: 38px;
+  color: #a65bff;
+}
+
+/* Plugin grid */
+.container {
+  width: 90%;
+  max-width: 1150px;
+  margin: auto;
+}
+
+.plugin-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.plugin {
+  min-height: 175px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  text-align: left;
+  cursor: pointer;
+  color: white;
+  border: 2px solid #7920d1;
+  border-radius: 18px;
+  background: rgba(13, 0, 28, .9);
+  transition: .25s;
+}
+
+.plugin:hover {
+  transform: translateY(-6px);
+  border-color: #d68bff;
+  box-shadow: 0 0 30px #8b20d8;
+}
+
+.plugin-icon {
+  width: 75px;
+  height: 75px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid #a43cff;
+  border-radius: 15px;
+  background: #290642;
+  font-family: Arial, sans-serif;
+  font-size: 35px;
+}
+
+.plugin h3 {
+  margin: 0 0 8px;
+  font-size: 27px;
+}
+
+.plugin p {
+  margin: 0;
+  font-family: Georgia, serif;
+  color: #c8a4e9;
+  font-size: 15px;
+}
+
+/* Pages */
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.detail {
+  text-align: center;
+  padding: 60px;
+  border: 2px solid #9e35ff;
+  border-radius: 20px;
+  background: rgba(10, 0, 22, .95);
+}
+
+.detail h1 {
+  font-size: 60px;
+}
+
+.detail p {
+  font-family: Georgia, serif;
+  font-size: 20px;
+  color: #d4b8e9;
+}
+
+.back {
+  margin-bottom: 25px;
+  padding: 12px 22px;
+  border: 1px solid #a43cff;
+  border-radius: 10px;
+  background: #200533;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* DOWNLOAD BOX */
+.download-box {
+  width: 100%;
+  max-width: 520px;
+  margin: 35px auto 0;
+  padding: 24px;
+  border: 1px solid #a43cff;
+  border-radius: 16px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(55, 10, 82, .95),
+      rgba(15, 2, 28, .98)
+    );
+  box-shadow:
+    0 0 20px rgba(151, 55, 255, .25),
+    inset 0 0 20px rgba(150, 50, 255, .06);
+}
+
+.download-box h2 {
+  margin: 0 0 8px;
+  font-size: 30px;
+  color: white;
+  text-shadow: 0 0 12px #a945ff;
+}
+
+.download-box p {
+  margin: 0 0 18px;
+  font-family: Georgia, serif;
+  font-size: 14px;
+  color: #cdb9dc;
+}
+
+.download-button {
+  display: block;
+  width: 100%;
+  padding: 13px 18px;
+  border: 1px solid #c276ff;
+  border-radius: 11px;
+  background:
+    linear-gradient(
+      90deg,
+      #7832bd,
+      #a74ff0
+    );
+  color: white;
+  text-decoration: none;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(159, 64, 255, .25);
+  transition: .2s;
+}
+
+.download-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 25px rgba(174, 70, 255, .55);
+  background:
+    linear-gradient(
+      90deg,
+      #9142dc,
+      #b965ff
+    );
+}
+
+.download-button.soon {
+  opacity: .7;
+  cursor: not-allowed;
+  background: linear-gradient(90deg, #4b315e, #624274);
+  border-color: #76538c;
+}
+
+.download-button.soon:hover {
+  transform: none;
+  box-shadow: 0 0 15px rgba(159, 64, 255, .15);
+}
+
+/* Bottom controls */
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  margin: 35px;
+}
+
+.arrow {
+  border: none;
+  background: none;
+  color: #c56cff;
+  font-size: 45px;
+  cursor: pointer;
+}
+
+.dots {
+  color: #bd4cff;
+  font-size: 22px;
+}
+
+/* INFO POPUP */
+.info-popup {
+  position: fixed;
+  right: 30px;
+  bottom: 105px;
+  width: 320px;
+  padding: 22px;
+  border: 1px solid #a64dff;
+  border-radius: 18px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(47, 10, 70, 0.98),
+      rgba(14, 3, 27, 0.98)
+    );
+  box-shadow:
+    0 0 20px rgba(151, 55, 255, 0.35),
+    inset 0 0 20px rgba(150, 50, 255, 0.08);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(25px) scale(.95);
+  transition:
+    opacity .25s ease,
+    transform .25s ease,
+    visibility .25s;
+  z-index: 1000;
+}
+
+.info-popup.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+/* Top section */
+.info-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.info-badge {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: #8f3de0;
+  color: white;
+  font-family: Georgia, serif;
+  font-size: 24px;
+  box-shadow: 0 0 15px rgba(169, 73, 255, .6);
+}
+
+.info-popup h3 {
+  margin: 0;
+  font-family: "UnifrakturCook", serif;
+  font-size: 22px;
+  color: white;
+  text-shadow: 0 0 10px #a945ff;
+}
+
+/* Close button */
+.info-close {
+  margin-left: auto;
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255,255,255,.06);
+  color: #cba5e8;
+  font-size: 20px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.info-close:hover {
+  background: rgba(180,80,255,.2);
+  color: white;
+}
+
+/* Text */
+.info-popup p {
+  margin: 0 0 18px;
+  font-family: Georgia, serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #cdb9dc;
+}
+
+/* Discord button */
+.discord-join {
+  width: 100%;
+  padding: 11px 15px;
+  border: 1px solid #bd73ff;
+  border-radius: 11px;
+  background:
+    linear-gradient(
+      90deg,
+      #7832bd,
+      #a74ff0
+    );
+  color: white;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(159, 64, 255, .25);
+  transition: .2s;
+}
+
+.discord-join:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(174, 70, 255, .55);
+  background:
+    linear-gradient(
+      90deg,
+      #9142dc,
+      #b965ff
+    );
+}
+
+/* Info button */
+.info {
+  position: fixed;
+  right: 30px;
+  bottom: 25px;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  border: 2px solid #d57aff;
+  background: #5b0785;
+  color: white;
+  font: 40px Georgia, serif;
+  cursor: pointer;
+  box-shadow: 0 0 25px #9c25ff;
+  z-index: 1001;
+  transition: 0.2s;
+}
+
+.info:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 35px #b43cff;
+}
+
+/* Responsive */
+@media(max-width: 850px) {
+  header {
+    grid-template-columns: 1fr;
+  }
+
+  .plugin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-popup {
+    right: 20px;
+    bottom: 100px;
+    width: calc(100% - 40px);
+    max-width: 290px;
+  }
+
+  .info {
+    right: 20px;
+    bottom: 20px;
+  }
+  #detailDescription {
+  white-space: pre-line;
+  text-align: left;
+  line-height: 1.8;
+}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <!-- CHANGE YOUR SKIN IMAGE -->
+  <a class="profile" href="#">
+    <img src="c:\Users\User\Desktop\bangaraga.png" alt="My Minecraft skin">
+  </a>
+
+  <div class="brand">
+    <h1>Charalabis1</h1>
+    <h2>McPlugins</h2>
+    <p id="siteStats" style="margin:12px 0 0;font-family:Arial,sans-serif;font-size:14px;color:#d4b8e9;">
+      👁️ Views: <span id="viewCount">0</span>
+      &nbsp; | &nbsp;
+      ⬇️ Downloads: <span id="downloadCount">0</span>
+    </p>
+  </div>
+
+  <!-- DISCORD -->
+  <a class="discord"
+     href="https://discord.gg/GRgEsXVecw"
+     target="_blank">
+    <span class="discord-icon">☯</span>
+    Discord
+  </a>
+
+</header>
+
+<div class="container">
+
+  <section id="home" class="page active">
+
+    <div class="plugin-grid" id="plugins"></div>
+
+    <div class="controls">
+      <button class="arrow" onclick="previousPage()">‹</button>
+      <span class="dots" id="dots">●</span>
+      <button class="arrow" onclick="nextPage()">›</button>
+    </div>
+
+  </section>
+
+  <section id="details" class="page">
+
+    <button class="back" onclick="goHome()">← Back</button>
+
+    <div class="detail">
+
+      <h1 id="detailTitle"></h1>
+
+      <p id="detailDescription"></p>
+
+      <!-- DOWNLOAD -->
+      <div class="download-box">
+
+        <h2>Download</h2>
+
+        <p id="downloadDescription">
+          Download the plugin and start using it on your server.
+        </p>
+
+        <a
+          class="download-button"
+          id="downloadButton"
+          href=""
+          download>
+          ✦ Download Plugin
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</div>
+
+<!-- INFO POPUP -->
+<div class="info-popup" id="infoPopup">
+
+  <div class="info-header">
+
+    <div class="info-badge">i</div>
+
+    <h3>Do you need help?</h3>
+
+    <button class="info-close" onclick="closeInfo()">×</button>
+
+  </div>
+
+  <p>
+    If you need help, join my Discord
+    and open a ticket. My team is here
+    to help you.
+  </p>
+
+  <a
+    class="discord-join"
+    href="https://discord.gg/GRgEsXVecw"
+    target="_blank">
+    ✦ Join Discord!
+  </a>
+
+</div>
+
+<!-- INFO BUTTON -->
+<button class="info" onclick="showInfo()">i</button>
+
+<script>
+
+/* YOUR PLUGINS */
+const plugins = [
+
+  {
+    name: "Custom Weapons",
+    shortDescription: "🧰 The 11 Mythic Weapons & Abilities",
+  description:"🧰 The 11 Mythic Weapons & Abilities\n\n" +
+  "🏹 Ranged Weapons\n\n" +
+  "• 🔵 Lightning Bow\n" +
+  "• 🟣 Orbital Bow\n" +
+  "• ⚫ Wither Crossbow\n" +
+  "• 🔵 Lightning Trident\n\n" +
+  "🗡️ PvP Swords/equipment\n\n" +
+  "• 🩵 Crit Speed Sword\n" +
+  "• ⚫ Blindness Aura Sword\n" +
+  "• 🔴 Strength Dash Sword\n" +
+  "• 🩸 Lifesteal Sword\n\n" +
+  "🪓 Heavy Weapons & Utility\n\n" +
+  "• 🟠 Crit Fire-Resist Axe\n" +
+  "• 🟡 Dash Mace\n\n" +
+  "• 🟢 Poison Shield\n"+
+  "• More information about the plugin in my discord server" 
+  ,
+    icon: "⚔",
+    file: "downloads/CustomWeapons-1.0.0.jar"
+  },
+
+  {
+    name: "Plugin Two",
+    description: "Description of your second plugin.",
+    icon: "✦",
+    file: "" // Example: "downloads/plugin-two.jar"
+  },
+
+  {
+    name: "Plugin Three",
+    description: "Description of your third plugin.",
+    icon: "☄",
+    file: "" // Example: "downloads/plugin-three.jar"
+  },
+
+  {
+    name: "Plugin Four",
+    description: "Description of your fourth plugin.",
+    icon: "♜",
+    file: "" // Example: "downloads/plugin-four.jar"
+  },
+
+  {
+    name: "Plugin Five",
+    description: "Description of your fifth plugin.",
+    icon: "✧",
+    file: "" // Example: "downloads/plugin-five.jar"
+  },
+
+  {
+    name: "Plugin Six",
+    description: "Description of your sixth plugin.",
+    icon: "☽",
+    file: "" // Example: "downloads/plugin-six.jar"
+  }
+
+];
+
+const pluginsContainer = document.getElementById("plugins");
+
+function loadPlugins() {
+
+  pluginsContainer.innerHTML = "";
+
+  plugins.forEach((plugin, index) => {
+
+    const card = document.createElement("button");
+
+    card.className = "plugin";
+
+    card.innerHTML = `
+      <div class="plugin-icon">${plugin.icon}</div>
+
+      <div>
+        <h3>${plugin.name}</h3>
+        <p>${plugin.shortDescription || plugin.description}</p>
+      </div>
+    `;
+
+    card.onclick = () => openPlugin(index);
+
+    pluginsContainer.appendChild(card);
+
+  });
+
+}
+
+function openPlugin(index) {
+
+  document.getElementById("home").classList.remove("active");
+
+  document.getElementById("details").classList.add("active");
+
+  document.getElementById("detailTitle").textContent =
+    plugins[index].name;
+
+  document.getElementById("detailDescription").textContent =
+    plugins[index].description;
+
+  const downloadButton = document.getElementById("downloadButton");
+  const downloadDescription = document.getElementById("downloadDescription");
+  const pluginFile = plugins[index].file;
+
+  downloadButton.classList.remove("soon");
+  downloadButton.onclick = null;
+
+  if (pluginFile && pluginFile.trim() !== "") {
+
+    downloadButton.href = pluginFile;
+    downloadButton.setAttribute("download", "");
+    downloadButton.textContent = "⬇️ Download Plugin";
+
+    downloadDescription.textContent =
+      "Download the plugin and start using it on your server.";
+
+    downloadButton.onclick = function() {
+
+      const count =
+        Number(localStorage.getItem("charalabis1_downloads") || "0") + 1;
+
+      localStorage.setItem("charalabis1_downloads", String(count));
+
+      document.getElementById("downloadCount").textContent =
+        count.toLocaleString();
+
+    };
+
+  } else {
+
+    downloadButton.removeAttribute("href");
+    downloadButton.removeAttribute("download");
+    downloadButton.textContent = "Soon!";
+    downloadButton.classList.add("soon");
+
+    downloadDescription.textContent =
+      "The download for this plugin is coming soon!";
+
+    downloadButton.onclick = function(event) {
+      event.preventDefault();
+    };
+
+  }
+
+}
+
+function goHome() {
+
+  document.getElementById("details").classList.remove("active");
+
+  document.getElementById("home").classList.add("active");
+
+}
+
+function previousPage() {
+  alert("Previous page");
+}
+
+function nextPage() {
+  alert("Next page");
+}
+
+/* INFO POPUP FUNCTION */
+function showInfo() {
+  const popup = document.getElementById("infoPopup");
+  popup.classList.toggle("show");
+}
+
+function closeInfo() {
+  document.getElementById("infoPopup").classList.remove("show");
+}
+
+/* Close popup when clicking somewhere else */
+document.addEventListener("click", function(event) {
+
+  const popup = document.getElementById("infoPopup");
+  const infoButton = document.querySelector(".info");
+
+  if (
+    popup.classList.contains("show") &&
+    !popup.contains(event.target) &&
+    !infoButton.contains(event.target)
+  ) {
+
+    popup.classList.remove("show");
+
+  }
+
+});
+
+loadPlugins();
+
+/* Local browser counters — not shared global website statistics */
+const viewStorageKey = "charalabis1_views";
+const downloadStorageKey = "charalabis1_downloads";
+
+const views =
+  Number(localStorage.getItem(viewStorageKey) || "0") + 1;
+
+localStorage.setItem(viewStorageKey, String(views));
+
+document.getElementById("viewCount").textContent =
+  views.toLocaleString();
+
+document.getElementById("downloadCount").textContent =
+  Number(localStorage.getItem(downloadStorageKey) || "0").toLocaleString();
+
+</script>
+
+</body>
+</html>
